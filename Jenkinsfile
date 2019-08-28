@@ -15,7 +15,7 @@ pipeline {
           def manualTrigger = true
           currentBuild.upstreamBuilds?.each { b ->
             echo "[INFO] Upstream build: ${b.getFullDisplayName()}"
-            def scmCause = b.getBuildCauses(hudson.triggers.SCMTrigger$SCMTriggerCause.class)
+            def scmCause = b.getBuildCauses("${hudson.triggers.SCMTrigger$SCMTriggerCause}")
             if (scmCause) {
               echo "[INFO] ${b.getFullDisplayName()}: Cause: ${scmCause}"
               b.getBuildVariables()?.each { k, v -> echo "[INFO] ${b.getFullDisplayName()}: ${k}: ${v}" }
