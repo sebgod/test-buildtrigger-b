@@ -9,13 +9,13 @@ pipeline {
         script {
           
           env.GIT_COMMIT = checkout scm
-          currentBuild.getBuildCauses("${hudson.model.Cause$UpstreamCause.class}")?.each { c -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): Cause: ${c}" }
+          currentBuild.getBuildCauses('hudson.model.Cause$UpstreamCause')?.each { c -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): Cause: ${c}" }
           currentBuild.getBuildVariables()?.each { k, v -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): ${k}: ${v}" }
           
           def manualTrigger = true
           currentBuild.upstreamBuilds?.each { b ->
             echo "[INFO] Upstream build: ${b.getFullDisplayName()}"
-            def scmCause = b.getBuildCauses("${hudson.triggers.SCMTrigger$SCMTriggerCause.class}")
+            def scmCause = b.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')
             if (scmCause) {
               echo "[INFO] ${b.getFullDisplayName()}: Cause: ${scmCause}"
               b.getBuildVariables()?.each { k, v -> echo "[INFO] ${b.getFullDisplayName()}: ${k}: ${v}" }
